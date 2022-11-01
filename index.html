@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,33 +8,44 @@
     <title>Project: Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <main>
         <section class="container">
             <div class="display">10 + 25</div>
             <div class="pad-container">
-                <button id="divide-btn">/</button>
-                <button id="multiply-btn">*</button>
-                <button id="subtract-btn">-</button>
-                <button id="add-btn">+</button>
-                <button id="equal-btn">=</button>
-                <button id="clear-btn">Clear</button>
-                <button id="inversion-btn">+/-</button>
-                <button id="perc-btn">%</button>
-                <button id="nine-btn">9</button>
-                <button id="eight-btn">8</button>
-                <button id="seven-btn">7</button>
-                <button id="six-btn">6</button>
-                <button id="five-btn">5</button>
-                <button id="four-btn">4</button>
-                <button id="three-btn">3</button>
-                <button id="two-btn">2</button>
-                <button id="one-btn">1</button>
-                <button id="dot-btn">.</button>
-                <button id="zero-btn">0</button>
+                <div class="extras">
+                    <button id="clear-btn">Clear</button>
+                    <button id="inversion-btn">+/-</button>
+                    <button id="perc-btn">%</button>
+                </div>
+
+                <div class="operands">
+                    <button id="seven-btn">7</button>
+                    <button id="eight-btn">8</button>
+                    <button id="nine-btn">9</button>
+                    <button id="four-btn">4</button>
+                    <button id="five-btn">5</button>
+                    <button id="six-btn">6</button>
+                    <button id="one-btn">1</button>
+                    <button id="two-btn">2</button>
+                    <button id="three-btn">3</button>
+                    <button id="zero-btn">0</button>
+                    <button id="dot-btn">.</button>
+                </div>
+
+                <div class="operators">
+                    <button id="divide-btn">/</button>
+                    <button id="multiply-btn">*</button>
+                    <button id="subtract-btn">-</button>
+                    <button id="add-btn">+</button>
+                    <button id="equal-btn">=</button>
+                </div>
+
             </div>
         </section>
     </main>
-  <script src="main.js"></script>  
+    <script src="main.js"></script>
 </body>
+
 </html>
