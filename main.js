@@ -4,12 +4,16 @@ let operator = "";
 let numA = "";
 let numB = "";
 let result = "";
+let perc = "";
 
 const displayEl = document.getElementById("display-el");
 const operandsEl = document.getElementById("operands-el");
 const operatorsEl = document.getElementById("operators-el");
 const equalBtn = document.getElementById("equal-btn");
 const clearBtn = document.getElementById("clear-btn");
+const inversionBtn = document.getElementById("inversion-btn");
+const percBtn = document.getElementById("perc-btn");
+const dotBtn = document.getElementById("dot-btn");
 
 // Event Listeners
 
@@ -21,12 +25,27 @@ operatorsEl.addEventListener('click', (e) => {
     addOperator(e.target.textContent);
 });
 
-equalBtn.addEventListener('click', () => {
-    operate(operator, numA, numB)
-}
-);
+operatorsEl.addEventListener('click', () => {
+    if (numA && numB) {
+        operate(operator, numA, numB);
+    }
+});
 
-clearBtn.addEventListener('click', () => clearAllData());
+equalBtn.addEventListener('click', () => {
+    operate(operator, numA, numB);
+});
+
+clearBtn.addEventListener('click', () => {
+    clearAllData();
+});
+
+inversionBtn.addEventListener('click', () => {
+    invertNumber();
+});
+
+percBtn.addEventListener('click', () => {
+    calcPercentage();
+});
 
 
 
@@ -48,6 +67,14 @@ function multiply(a, b) {
 
 function divide(a, b) {
     return a / b;
+}
+
+function calcPercentage() {
+    if (numB) {
+        perc += "%"
+        renderInput();
+        return numB = numA * (numB / 100);
+    }
 }
 
 function operate(operator, numA, numB) {
@@ -78,6 +105,7 @@ function clearData() {
     operator = "";
     numA = "";
     numB = "";
+    perc = ""
 }
 
 function clearAllData() {
@@ -85,6 +113,7 @@ function clearAllData() {
     numA = "";
     numB = "";
     result = "";
+    perc = ""
     displayEl.textContent = 0;
 }
 
@@ -98,7 +127,7 @@ function addDigit(input) {
 }
 
 function addOperator(input) {
-    if (input == "=") {
+    if (input == "=" || numA == '') {
         return
     } else {
         operator = input;
@@ -108,13 +137,27 @@ function addOperator(input) {
 
 function renderInput() {
     if (result != "") {
-        displayEl.textContent = `${result} ${operator} ${numB}`;
+        displayEl.textContent = `${result} ${operator} ${numB} ${perc}`;
     } else {
-        displayEl.textContent = `${numA} ${operator} ${numB}`;
+        displayEl.textContent = `${numA} ${operator} ${numB} ${perc}`;
     }
 
 }
 
 function renderResult() {
-    displayEl.textContent = result;
+    if (operator) {
+        displayEl.textContent = result;
+    }
+}
+
+function invertNumber() {
+    if (!operator) {
+        numA = +numA;
+        numA = -numA;
+    } else {
+        numB = +numB;
+        numB = -numB;
+    }
+
+    renderInput();
 }
