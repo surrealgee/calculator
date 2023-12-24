@@ -26,16 +26,28 @@ numPad.addEventListener('click', (e) => {
 });
 
 resultBtn.addEventListener('click', () => {
-    const operationResult = operate(firstOperand, secondOperand, operator);
-    result = operationResult;
-
-    showResult(result);
-    clearOps();
+    if (firstOperand && secondOperand) {
+        getResult();
+    }
 });
 
 resetBtn.addEventListener('click', reset);
 
 // Functions
+
+function getResult() {
+    const operationResult = operate(firstOperand, secondOperand, operator);
+    result = operationResult;
+
+    if (!isFinite(result)) {
+        result = "ERROR";
+    }
+
+    showResult(result);
+    clearOps();
+
+    return result;
+}
 
 function clearOps() {
     firstOperand = null;
@@ -52,14 +64,19 @@ function reset() {
 }
 
 function updateValues(value) {
-    const isOperand = isFinite(value) || value == ".";
+    const isOperand = isFinite(value) || value == "." || !isNaN(value);
     const isOperator = !isFinite(value);
 
     if (isOperand && operator) {
         setSecondOperand(value);
     } else if (isOperand) {
         setFirstOperand(value);
-    } else if (isOperator && firstOperand && !operator) {
+    } else if (isOperator && firstOperand && !operator
+        || isOperator && firstOperand
+        && !secondOperand) {
+        setOperator(value);
+    } else if (isOperator && firstOperand && secondOperand) {
+        firstOperand = getResult();
         setOperator(value);
     } else if (isOperator && result) {
         firstOperand = result;
