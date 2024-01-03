@@ -10,8 +10,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #EAE3DC;
+    background-color: #3A4663;
     font-family: 'League Spartan', sans-serif;
     font-weight: 700;
 }
@@ -22,12 +21,11 @@ body {
 
 .calc {
     width: 375px;
-    height: 667px;
-    padding: 30px 24px;
+    padding: 2em 1em;
     background-color: #3A4663;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 1.5em;
 }
 
 /* Header */
