@@ -5,6 +5,7 @@ let secondOperand;
 let operator;
 let displayValue = 0;
 let result;
+let currentTheme;
 
 // Nodes
 
@@ -12,6 +13,7 @@ const numPad = document.querySelector('.main_pad');
 const display = document.querySelector('.main_display');
 const resultBtn = document.querySelector('#result_btn');
 const resetBtn = document.querySelector('#reset_btn');
+const themeSelector = document.querySelector('.selector_toggle');
 
 
 // Handlers
@@ -33,7 +35,52 @@ resultBtn.addEventListener('click', () => {
 
 resetBtn.addEventListener('click', reset);
 
+themeSelector.addEventListener('click', (e) => {
+    updateCurrentTheme()
+
+    const isNotCurrentTheme = e.target.textContent != currentTheme;
+    const isNumberSelectorOrToggleButton = e.target.localName === 'span' || e.target.className === 'theme_picker';
+
+    if (isNotCurrentTheme) {
+        if (isNumberSelectorOrToggleButton) {
+            setTheme();
+        }
+    }
+});
+
 // Functions
+
+function updateCurrentTheme() {
+    const root = document.documentElement
+
+    if (root.className === 'dark') {
+        currentTheme = 1;
+    } else {
+        currentTheme = 2;
+    }
+}
+
+function setTheme() {
+    const root = document.documentElement;
+    const newTheme = getNewTheme(root);
+
+    root.className = newTheme;
+    updateThemePickerDisplay(root);
+}
+
+function getNewTheme(root) {
+    return root.className === 'light' ? 'dark' : 'light';
+}
+
+function updateThemePickerDisplay(root) {
+    const themePicker = document.querySelector('.theme_picker');
+
+    if (root.className === 'light') {
+        themePicker.style.justifyContent = 'flex-end';
+    } else {
+        themePicker.style.justifyContent = 'flex-start';
+    }
+}
 
 function getResult() {
     const operationResult = operate(firstOperand, secondOperand, operator);
