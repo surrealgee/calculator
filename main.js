@@ -53,6 +53,8 @@ undoBtn.addEventListener('click', undo);
 
 // Functions
 
+
+
 function undo() {
     // Prevents deleting "ERROR" char by chat after dividing by 0.
     if (!isFinite(result)) result = "0";
