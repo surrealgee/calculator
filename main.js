@@ -14,6 +14,7 @@ const display = document.querySelector('.main_display');
 const resultBtn = document.querySelector('#result_btn');
 const resetBtn = document.querySelector('#reset_btn');
 const themeSelector = document.querySelector('.selector_toggle');
+const undoBtn = document.querySelector('#undo');
 
 
 // Handlers
@@ -48,7 +49,26 @@ themeSelector.addEventListener('click', (e) => {
     }
 });
 
+undoBtn.addEventListener('click', undo);
+
 // Functions
+
+function undo() {
+    // Prevents deleting "ERROR" char by chat after dividing by 0.
+    if (!isFinite(result)) result = "0";
+
+    if (result) {
+        result = result.slice(0, result.length - 1);
+    } else if (secondOperand) {
+        secondOperand = secondOperand.slice(0, secondOperand.length - 1);
+    } else if (operator) {
+        operator = '';
+    } else {
+        firstOperand = firstOperand.slice(0, firstOperand.length - 1);
+    }
+
+    updateDisplay();
+}
 
 function updateCurrentTheme() {
     const root = document.documentElement
@@ -159,6 +179,8 @@ function updateDisplay() {
         displayValue = `${firstOperand} ${operator}`;
     } else if (firstOperand) {
         displayValue = `${firstOperand}`;
+    } else if (result) {
+        displayValue = result;
     } else {
         displayValue = 0;
     }
@@ -208,5 +230,6 @@ function operate(firstOperand, secondOperand, operator) {
             result = divide(firstOperand, secondOperand);
             break;
     }
-    return result;
+    // Returns result as a string so the del button can be used on it.
+    return String(result);
 };
