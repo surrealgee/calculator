@@ -9,6 +9,7 @@ let currentTheme;
 
 // Nodes
 
+const root = document.documentElement;
 const numPad = document.querySelector('.main_pad');
 const display = document.querySelector('.main_display');
 const resultBtn = document.querySelector('#result_btn');
@@ -28,11 +29,22 @@ numPad.addEventListener('click', (e) => {
     }
 });
 
-resultBtn.addEventListener('click', () => {
-    if (firstOperand && secondOperand) {
+document.addEventListener('keydown', (e) => {
+    const key = e.key;
+    
+    if (key === 'Enter') {
         getResult();
+    } else if (key === 'Backspace') {
+        undo();
+    } else if (key === 'Escape') {
+        reset();
+    } else {
+        updateValues(key);
+        updateDisplay();
     }
 });
+
+resultBtn.addEventListener('click', getResult);
 
 resetBtn.addEventListener('click', reset);
 
@@ -105,17 +117,19 @@ function updateThemePickerDisplay(root) {
 }
 
 function getResult() {
-    const operationResult = operate(firstOperand, secondOperand, operator);
-    result = operationResult;
+    if (firstOperand && secondOperand) {
+        const operationResult = operate(firstOperand, secondOperand, operator);
+        result = operationResult;
 
-    if (!isFinite(result)) {
-        result = "ERROR";
+        if (!isFinite(result)) {
+            result = "ERROR";
+        }
+
+        showResult(result);
+        clearOps();
+
+        return result;
     }
-
-    showResult(result);
-    clearOps();
-
-    return result;
 }
 
 function clearOps() {
@@ -226,12 +240,16 @@ function operate(firstOperand, secondOperand, operator) {
             result = subtract(firstOperand, secondOperand);
             break;
         case "x":
+        case "*":
             result = multiply(firstOperand, secondOperand);
             break;
         case "/":
             result = divide(firstOperand, secondOperand);
             break;
     }
+
+    result = result.toFixed(2);
+
     // Returns result as a string so the del button can be used on it.
     return String(result);
 };
