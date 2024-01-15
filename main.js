@@ -21,6 +21,7 @@ const undoBtn = document.querySelector('#undo');
 // Handlers
 
 numPad.addEventListener('click', (e) => {
+    e.preventDefault();
     const { id, textContent } = e.target;
 
     if (!id) {
@@ -31,12 +32,12 @@ numPad.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
     const key = e.key;
-    
+
     if (key === 'Enter') {
         getResult();
     } else if (key === 'Backspace') {
         undo();
-    } else if (key === 'Escape') {
+    } else if (key === 'Escape' || key === "Delete") {
         reset();
     } else {
         updateValues(key);
@@ -69,7 +70,7 @@ undoBtn.addEventListener('click', undo);
 
 function undo() {
     // Prevents deleting "ERROR" char by chat after dividing by 0.
-    if (!isFinite(result)) result = "0";
+    if (!isFinite(result) || !firstOperand) result = "0";
 
     if (result) {
         result = result.slice(0, result.length - 1);
@@ -151,9 +152,9 @@ function updateValues(value) {
     const isOperator = !isFinite(value);
 
     if (isOperand && operator) {
-        setSecondOperand(value);
+        secondOperand = setOperand(value, secondOperand);
     } else if (isOperand) {
-        setFirstOperand(value);
+        firstOperand = setOperand(value, firstOperand);
     } else if (isOperator && firstOperand && !operator
         || isOperator && firstOperand
         && !secondOperand) {
@@ -168,13 +169,20 @@ function updateValues(value) {
     }
 };
 
-function setFirstOperand(inputNumber) {
-    if (!firstOperand) {
-        firstOperand = inputNumber;
+function setOperand(inputNumber, operand) {
+    let current;
+
+    if (!operand) {
+        current = inputNumber;
     } else {
-        firstOperand += inputNumber;
+        current = operand + inputNumber;
     }
-};
+
+    const operandValidator = /^((\d+)?(\.)?(\d+)?)$/;
+    const isValid = operandValidator.test(current);
+
+    return isValid ? current : operand;
+}
 
 function setSecondOperand(inputNumber) {
     if (!secondOperand) {
@@ -185,7 +193,12 @@ function setSecondOperand(inputNumber) {
 };
 
 function setOperator(inputOp) {
-    operator = inputOp;
+    const operatorValidator = /[+\-*x\/]/i;
+    const isValid = operatorValidator.test(inputOp);
+
+    if (isValid) {
+        operator = inputOp;
+    }
 };
 
 function updateDisplay() {
@@ -248,7 +261,9 @@ function operate(firstOperand, secondOperand, operator) {
             break;
     }
 
-    result = result.toFixed(2);
+    if (result % 1) {
+        result = result.toFixed(2);
+    }
 
     // Returns result as a string so the del button can be used on it.
     return String(result);

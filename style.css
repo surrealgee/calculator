@@ -183,6 +183,10 @@ body {
     cursor: pointer;
 }
 
+button:focus-visible {
+    outline: none;
+}
+
 .special {
     background: var(--color-alt-btn-bg);
     box-shadow: 0px -4px 0px 0px var(--color-alt-btn-shadow) inset;
