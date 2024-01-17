@@ -70,7 +70,7 @@ undoBtn.addEventListener('click', undo);
 
 function undo() {
     // Prevents deleting "ERROR" char by chat after dividing by 0.
-    if (!isFinite(result) || !firstOperand) result = "0";
+    if (result === "ERROR") result = "0";
 
     if (result) {
         result = result.slice(0, result.length - 1);
