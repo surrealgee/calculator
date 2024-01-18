@@ -11,11 +11,17 @@
     --color-alt-btn-bg: #647198;
     --color-unique-btn-bg: #D03F2F;
 
+    --color-base-btn-hover: #FFFFFE;
+    --color-alt-btn-hover: #A2B2E1;
+    --color-unique-btn-hover: #F96B5B;
+
     --color-base-btn-shadow: #B3A497;
     --color-alt-btn-shadow: #414E73;
     --color-unique-btn-shadow: #93261A;
 
     --color-base-btn-text: #fff;
+    --color-unique-btn-text: var(--color-base-btn-text);
+
 }
 
 :root.light {
@@ -30,11 +36,42 @@
     --color-alt-btn-bg: #378187;
     --color-unique-btn-bg: #C85402;
 
+    --color-base-btn-hover: #FFF;
+    --color-alt-btn-hover: #62B5BC;
+    --color-unique-btn-hover: #FF8A38;
+
     --color-base-btn-shadow: #A79E91;
     --color-alt-btn-shadow: #1B6066;
     --color-unique-btn-shadow: #873901;
 
     --color-base-btn-text: #fff;
+    --color-unique-btn-text: var(--color-base-btn-text);
+}
+
+/* The theme below is no implemented yet */
+
+:root.night {
+    --color-base-bg: #17062A;
+    --color-primary-bg: #1E0936;
+    --color-secondary-bg: var(--color-primary-bg);
+
+    --color-base-text: #FFE53D;
+    --color-alt-text: var(--color-base-text);
+
+    --color-base-btn-bg: #331C4D;
+    --color-alt-btn-bg: #56077C;
+    --color-unique-btn-bg: #00DED0;
+
+    --color-base-btn-hover: #6C34AC;
+    --color-alt-btn-hover: #8631AF;
+    --color-unique-btn-hover: #93FFF8;
+
+    --color-base-btn-shadow: #881C9E;
+    --color-alt-btn-shadow: #BE15F4;
+    --color-unique-btn-shadow: #6CF9F1;
+
+    --color-base-btn-text: #fff;
+    --color-unique-btn-text: #1A2327;
 }
 
 /* General */
@@ -67,7 +104,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     /* padding: 2em 1.5em 1.5em; */
-    padding: 0.75em 1.5em ;
+    padding: 0.75em 1.5em;
     width: 100%;
 }
 
@@ -122,12 +159,16 @@ body {
 }
 
 .picker_oval {
-    background-color: #D03F2F;
+    background-color: var(--color-unique-btn-bg);
     border-radius: 50%;
     cursor: pointer;
     display: block;
     height: 16px;
     width: 16px;
+}
+
+.picker_oval:hover {
+    background-color: var(--color-unique-btn-hover);
 }
 
 .selector_toggle {
@@ -180,6 +221,10 @@ body {
     width: 20%;
 }
 
+.pad_button:hover {
+    background-color: var(--color-base-btn-hover);
+}
+
 button:focus-visible {
     outline: none;
 }
@@ -191,11 +236,19 @@ button:focus-visible {
     font-size: 1.25rem;
 }
 
+.special:hover {
+    background-color: var(--color-alt-btn-hover);
+}
+
 .unique {
     background: var(--color-unique-btn-bg);
     box-shadow: 0px -4px 0px 0px var(--color-unique-btn-shadow) inset;
-    color: var(--color-base-btn-text);
+    color: var(--color-unique-btn-text);
     font-size: 1.25rem;
+}
+
+.unique:hover {
+    background-color: var(--color-unique-btn-hover);
 }
 
 .large {
@@ -211,6 +264,6 @@ button:focus-visible {
     .calc {
         max-width: 540px;
         min-height: auto;
-        padding: 0.75em 1.5em ;
+        padding: 0.75em 1.5em;
     }
 }
