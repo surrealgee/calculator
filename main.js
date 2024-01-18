@@ -21,10 +21,9 @@ const undoBtn = document.querySelector('#undo');
 // Handlers
 
 numPad.addEventListener('click', (e) => {
-    e.preventDefault();
     const { id, textContent } = e.target;
 
-    if (!id) {
+    if (!id && textContent.length <= 5) {
         updateValues(textContent);
         updateDisplay();
     }
